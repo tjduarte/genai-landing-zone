@@ -127,7 +127,7 @@ terraform apply plan
 
 ## Support
 
-If you encounter any issue or have questions about this repo, please open an issue.
+If you encounter any issue or have questions about this repo, please open a discussion.
 I will be monitoring it for some time after the presentation.
 
 Have fun!
