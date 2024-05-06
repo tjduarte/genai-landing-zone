@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/external"
       version = "2.3.3"
     }
+    azapi = {
+      source  = "Azure/azapi"
+      version = "1.13.1"
+    }
   }
 
   required_version = ">= 1.1.0"

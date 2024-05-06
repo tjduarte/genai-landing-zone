@@ -18,8 +18,8 @@ variable "tags" {
   type = map(string)
 }
 
-variable "openai_uris" {
-  type = list(string)
+variable "apim_host_name" {
+    type = string
 }
 
 variable "network_resource_group" {
@@ -31,8 +31,4 @@ variable "virtual_network" {
     id        = string,
     subnet_id = string
   })
-}
-
-variable "front_door_id" {
-  type = string
 }

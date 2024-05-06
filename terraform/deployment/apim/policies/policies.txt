@@ -1,6 +1,10 @@
 <policies>
     <inbound>
         <base />
+        <!-- Checks if the requests comes from frontdoot -->
+        <check-header name="X-Azure-FDID" failed-check-httpcode="403" failed-check-error-message="Invalid request." ignore-case="false">
+            <value>{{FrontDoorId}}</value>
+        </check-header>
         <!-- Getting the main variable where we keep the list of backends -->
         <cache-lookup-value key="listBackends" variable-name="listBackends" />
         <!-- If we can't find the variable, initialize it -->

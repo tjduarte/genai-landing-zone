@@ -55,6 +55,22 @@ module "apim" {
     id        = azurerm_virtual_network.virtual_network.id
     subnet_id = azurerm_subnet.apim_subnet.id
   }
+  front_door_id = module.front-door.front_door_id
+}
+
+module "front-door" {
+  source                 = "./front-door"
+  location               = azurerm_resource_group.resource_group.location
+  resource_group         = azurerm_resource_group.resource_group.name
+  name                   = var.front_door.name
+  resource_suffix        = var.resource_suffix
+  network_resource_group = azurerm_resource_group.network_resource_group.name
+  tags                   = var.tags
+  virtual_network = {
+    id        = azurerm_virtual_network.virtual_network.id
+    subnet_id = azurerm_subnet.apim_subnet.id
+  }
+  apim_host_name = "${var.apim.name}-${var.resource_suffix}.azure-api.net"
 }
 
 # Assign permissions to Azure AI Search system identity

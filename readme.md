@@ -35,53 +35,79 @@ The example below illustrates how the file should be structured.
 You can also open [variables.tf](terraform/deployment/variables.tf) and check the required variables and formats.
 
 ```terraform
-resource_suffix = "ch-msbuild-ai"
-
-location = "westeurope"
-
-resource_group = {
-  name = "rg"
+variable "resource_suffix" {
+  type = string
 }
 
-network_resource_group = {
-  name = "rg-network"
+variable "location" {
+  type = string
 }
 
-open_ai = {
-  name      = "oai"
-  locations = ["swedencentral", "australiaeast"]
+variable "resource_group" {
+  type = object({
+    name = string
+  })
 }
 
-storage = {
-  name           = "storage",
-  container_name = "documents"
+variable "network_resource_group" {
+  type = object({
+    name = string
+  })
 }
 
-ai_search = {
-  name        = "search",
-  api_version = "2023-10-01-Preview"
+variable "open_ai" {
+  type = object({
+    name      = string
+    locations = list(string)
+  })
 }
 
-apim = {
-  name = "apim"
+variable "storage" {
+  type = object({
+    name           = string,
+    container_name = string
+  })
 }
 
-tags = {
-  "description" = "AI Landing Zone"
+variable "ai_search" {
+  type = object({
+    name        = string,
+    api_version = string
+  })
 }
 
-virtual_network = {
-  address_space = ["10.2.0.0/16"],
-  name          = "vnet",
-  subnets = {
-    ai   = "10.2.0.0/24",
-    apim = "10.2.1.0/24",
-    vm   = "10.2.2.0/24"
-  }
+variable "apim" {
+  type = object({
+    name = string
+  })
 }
 
-virtual_machine = {
-  name = "vm"
+variable "front_door" {
+  type = object({
+    name = string
+  })
+}
+
+variable "tags" {
+  type = map(string)
+}
+
+variable "virtual_network" {
+  type = object({
+    name          = string,
+    address_space = list(string)
+    subnets = object({
+      ai   = string,
+      apim = string,
+      vm   = string
+    })
+  })
+}
+
+variable "virtual_machine" {
+  type = object({
+    name = string
+  })
 }
 ```
 

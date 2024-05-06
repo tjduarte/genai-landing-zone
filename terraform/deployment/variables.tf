@@ -45,6 +45,12 @@ variable "apim" {
   })
 }
 
+variable "front_door" {
+  type = object({
+    name = string
+  })
+}
+
 variable "tags" {
   type = map(string)
 }

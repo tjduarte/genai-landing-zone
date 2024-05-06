@@ -65,6 +65,19 @@ resource "azapi_resource" "api_import" {
   })
 }
 
+resource "azapi_resource" "front_door_id" {
+  type      = "Microsoft.ApiManagement/service/namedValues@2023-05-01-preview"
+  name      = "FrontDoorId"
+  parent_id = azapi_resource.api_management.id
+  body = jsonencode({
+    properties = {
+      displayName = "FrontDoorId"
+      secret      = false
+      value       = var.front_door_id
+    }
+  })
+}
+
 resource "azapi_resource" "api_policies" {
   type      = "Microsoft.ApiManagement/service/apis/policies@2023-05-01-preview"
   name      = "policy"
@@ -75,12 +88,5 @@ resource "azapi_resource" "api_policies" {
       value  = file("${path.module}/policies/policies.txt")
     }
   })
+  depends_on = [azapi_resource.front_door_id, azapi_resource.backends]
 }
-
-# resource "azurerm_api_management_named_value" "uami_client_id" {
-#   name                = "uami-client-id"
-#   resource_group_name = var.resource_group
-#   api_management_name = azapi_resource.api_management.name
-#   display_name        = "uami-client-id"
-#   value               = data.azuread_service_principal.api_management_system_identity.client_id
-# }
